@@ -158,8 +158,6 @@ button {
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
 
-
-
 .addDuality canvas {
     width: 50% !important;
     height: auto !important;
@@ -310,5 +308,261 @@ button {
     flex: 1;
     text-align: center;
     font-size: 1.5em;
+}
+
+.hopeValue {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.hpValue,
+.stressValue,
+.armorValue {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 2%;
+    align-items: center;
+    justify-content: center;
+    padding: 1%;
+}
+
+.hpValue div,
+.stressValue div,
+.armorValue div {
+    width: 30px;
+    height: 15px;
+}
+
+.hope-ring {
+    width: 10%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 3px solid var(--secondary-color);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.hope-ring.filled {
+    background-color: darkgoldenrod;
+    border-color: darkgoldenrod;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.hope-ring .sunburst {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.hope-ring.filled .sunburst {
+    opacity: 1;
+}
+
+.hope-ring .sunray {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 2px;
+    height: 15px;
+    background: linear-gradient(to top, #FFD700, transparent);
+    transform-origin: bottom center;
+    opacity: 0.8;
+}
+
+@keyframes fillRing {
+    0% {
+        background-color: transparent;
+        transform: scale(0.8);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        background-color: #FFD700;
+        transform: scale(1);
+    }
+}
+
+@keyframes burstRays {
+    0% {
+        transform: translate(-50%, -50%) scale(0) rotate(0deg);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1.5) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+.hope-ring.animating {
+    animation: fillRing 0.5s ease-out;
+}
+
+.hope-ring.animating .sunburst {
+    animation: burstRays 0.8s ease-out;
+}
+
+.hp-heart {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: #DC143C;
+    border: 3px solid #8B0000;
+    box-shadow: 0 0 10px rgba(220, 20, 60, 0.5);
+}
+
+.hp-heart.broken {
+    background-color: #555;
+    border-color: #333;
+    box-shadow: none;
+    opacity: 0.5;
+}
+
+.hp-heart .crack {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #333, transparent, #333);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: center;
+    opacity: 0;
+}
+
+.hp-heart.broken .crack {
+    opacity: 1;
+}
+
+@keyframes breakHeart {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.2) rotate(-5deg);
+    }
+    50% {
+        transform: scale(0.9) rotate(5deg);
+    }
+    75% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+@keyframes showCrack {
+    0% {
+        transform: translateX(-50%) scaleY(0);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) scaleY(1);
+        opacity: 1;
+    }
+}
+
+.hp-heart.animating {
+    animation: breakHeart 0.6s ease-out;
+}
+
+.hp-heart.animating .crack {
+    animation: showCrack 0.4s ease-out 0.2s forwards;
+}
+
+.stress-heart {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: #C8A2C8;
+    border: 3px solid #8B7AA8;
+    box-shadow: 0 0 10px rgba(200, 162, 200, 0.5);
+}
+
+.stress-heart.broken {
+    background-color: #555;
+    border-color: #333;
+    box-shadow: none;
+    opacity: 0.5;
+}
+
+.stress-heart .crack {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #333, transparent, #333);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: center;
+    opacity: 0;
+}
+
+.stress-heart.broken .crack {
+    opacity: 1;
+}
+
+.stress-heart.animating {
+    animation: breakHeart 0.6s ease-out;
+}
+
+.stress-heart.animating .crack {
+    animation: showCrack 0.4s ease-out 0.2s forwards;
+}
+
+.armor-heart {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    position: relative;
+    transition: all 0.3s ease;
+    background-color: #C0C0C0;
+    border: 3px solid #808080;
+    box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+}
+
+.armor-heart.broken {
+    background-color: #555;
+    border-color: #333;
+    box-shadow: none;
+    opacity: 0.5;
+}
+
+.armor-heart .crack {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(to bottom, #333, transparent, #333);
+    transform: translateX(-50%) scaleY(0);
+    transform-origin: center;
+    opacity: 0;
+}
+
+.armor-heart.broken .crack {
+    opacity: 1;
+}
+
+.armor-heart.animating {
+    animation: breakHeart 0.6s ease-out;
+}
+
+.armor-heart.animating .crack {
+    animation: showCrack 0.4s ease-out 0.2s forwards;
 }
 
