@@ -3,53 +3,62 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Tracker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="3dDice/d4_dice3d.js" defer></script>
+    <script src="3dDice/dice3d.js" defer></script>
     <script src="tracker.js" defer></script>
 </head>
 
 <body>
-    <div class="container_tracker">
-        <div class="tracker">
-            <h2 class="tracker_title" data-stat="hope">Hoffnung</h2>
-            <div class="item_tracker_container">
-                <button class="clear_btn minus">-</button>
-                <label class="value_counter hopeValue">0</label>
-                <button class="mark_btn plus">+</button>
+    <!-- Tab Navigation -->
+    <div class="tab-nav">
+        <button class="tab-btn active" data-tab="tracker">Tracker</button>
+        <button class="tab-btn" data-tab="dice">Dice</button>
+    </div>
+
+    <!-- Tracker Tab Content -->
+    <div class="tab-content active" id="tracker-tab">
+        <div class="container_tracker">
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="hope">Hoffnung</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn minus">-</button>
+                    <label class="value_counter hopeValue">0</label>
+                    <button class="mark_btn plus">+</button>
+                </div>
             </div>
-        </div>
-        <div class="tracker">
-            <h2 class="tracker_title" data-stat="hp">Lebenspunkte</h2>
-            <div class="item_tracker_container">
-                <button class="clear_btn clearHP">C</button>
-                <label class="value_counter hpValue">0</label>
-                <button class="mark_btn markHP">M</button>
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="hp">Lebenspunkte</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn clearHP">C</button>
+                    <label class="value_counter hpValue">0</label>
+                    <button class="mark_btn markHP">M</button>
+                </div>
             </div>
-        </div>
-        <div class="tracker">
-            <h2 class="tracker_title" data-stat="stress">Stress</h2>
-            <div class="item_tracker_container">
-                <button class="clear_btn clearStress">C</button>
-                <label class="value_counter stressValue">0</label>
-                <button class="mark_btn markStress">M</button>
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="stress">Stress</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn clearStress">C</button>
+                    <label class="value_counter stressValue">0</label>
+                    <button class="mark_btn markStress">M</button>
+                </div>
             </div>
-        </div>
-        <div class="tracker">
-            <h2 class="tracker_title" data-stat="armor">Rüstungspunkte</h2>
-            <div class="item_tracker_container">
-                <button class="clear_btn clearArmor">C</button>
-                <label class="value_counter armorValue">0</label>
-                <button class="mark_btn markArmor">M</button>
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="armor">Rüstungspunkte</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn clearArmor">C</button>
+                    <label class="value_counter armorValue">0</label>
+                    <button class="mark_btn markArmor">M</button>
+                </div>
             </div>
-        </div>
-        <div class="tracker">
-            <h2 class="tracker_title">Geld</h2>
+            <div class="tracker">
+                <h2 class="tracker_title">Geld</h2>
+            </div>
         </div>
     </div>
     
@@ -62,18 +71,45 @@
             <button id="saveConfig">Save</button>
         </div>
     </div>
-    <div class="container_sidebar">
-        <div class="sidebar">
+    
+    <!-- Dice Tab Content -->
+    <div class="tab-content" id="dice-tab">
+        <div class="container_sidebar full-width">
+            <div class="sidebar">
             <div class="dice_btn_container addD4">
                 <canvas id="d4Canvas"></canvas>
                 <span class="dice_label">D4</span>
             </div>
-            <button class="dice_btn addD6">D6</button>
-            <button class="dice_btn addD8">D8</button>
-            <button class="dice_btn addD10">D10</button>
-            <button class="dice_btn addD12">D12</button>
-            <button class="dice_btn addD20">D20</button>
-            <button class="dice_btn addD100">D100</button>
+            <div class="dice_btn_container addD6">
+                <canvas id="d6Canvas"></canvas>
+                <span class="dice_label">D6</span>
+            </div>
+            <div class="dice_btn_container addD8">
+                <canvas id="d8Canvas"></canvas>
+                <span class="dice_label">D8</span>
+            </div>
+            <div class="dice_btn_container addD10">
+                <canvas id="d10Canvas"></canvas>
+                <span class="dice_label">D10</span>
+            </div>
+            <div class="dice_btn_container addD12">
+                <canvas id="d12Canvas"></canvas>
+                <span class="dice_label">D12</span>
+            </div>
+            <div class="dice_btn_container addD20">
+                <canvas id="d20Canvas"></canvas>
+                <span class="dice_label">D20</span>
+            </div>
+            <div class="dice_btn_container addD100">
+                <canvas id="d100Canvas"></canvas>
+                <span class="dice_label">D100</span>
+            </div>
+            <div class="dice_btn_container addDuality">
+                <canvas id="2d12Canvas1"></canvas>
+                <canvas id="2d12Canvas2"></canvas>
+                <span class="dice_label">Dualitaet</span>
+            </div>
+            </div>
             <button class="dice_btn clearDice">X</button>
             <button class="dice_btn rollDice">Roll</button>
             <label id="dice_tally">noDice</label>

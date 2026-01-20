@@ -111,3 +111,25 @@ stressPlus.addEventListener('click', () => updateCounter(stressValue, 1, 'stress
 // Rüstungspunkte (Armor) buttons
 armorMinus.addEventListener('click', () => updateCounter(armorValue, -1, 'armor'));
 armorPlus.addEventListener('click', () => updateCounter(armorValue, 1, 'armor'));
+
+// Tab switching functionality
+document.querySelectorAll('.tab-btn').forEach(button => {
+    button.addEventListener('click', () => {
+        const tabName = button.getAttribute('data-tab');
+        
+        // Remove active class from all tabs and buttons
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked button and corresponding content
+        button.classList.add('active');
+        document.getElementById(`${tabName}-tab`).classList.add('active');
+        
+        // Resize dice when switching to dice tab
+        if (tabName === 'dice' && typeof diceInstances !== 'undefined') {
+            setTimeout(() => {
+                diceInstances.forEach(dice => dice.resize());
+            }, 50);
+        }
+    });
+});

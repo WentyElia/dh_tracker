@@ -18,12 +18,57 @@ html, body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     font-family: var(--font-family);
     color: var(--secondary-color);
     background-color: var(--primary-color);
+    touch-action: manipulation;
+}
+
+.tab-nav {
+    width: 100%;
+    display: flex;
+    background-color: var(--tertiary-color);
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 15px;
+    font-family: var(--font-family);
+    font-size: 1.2em;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-right: 2px solid var(--tertiary-color);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.tab-btn:last-child {
+    border-right: none;
+}
+
+.tab-btn:hover {
+    background-color: rgba(200, 180, 150, 0.6);
+}
+
+.tab-btn.active {
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+    height: calc(100% - 60px);
+    flex-direction: row;
+}
+
+.tab-content.active {
+    display: flex;
 }
 
 button {
@@ -34,7 +79,7 @@ button {
 }
 
 .container_tracker{
-    width: 80%;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -59,11 +104,21 @@ button {
     justify-content: flex-start;
 }
 
+.container_sidebar.full-width {
+    width: 100%;
+    margin-left: 0;
+}
+
 .sidebar{
     height: 100%;
     width: 100%;
     background-color: var(--primary-color);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    align-content: start;
 }
+
+
 
 .dice_btn{
     width: 98%;
@@ -80,9 +135,8 @@ button {
 }
 
 .dice_btn_container {
-    width: 98%;
-    height: 9%;
-    margin: 1%;
+    width: 100%;
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -104,8 +158,11 @@ button {
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
 }
 
-.addD4 {
-    background-image: url('d4.png');
+
+
+.addDuality canvas {
+    width: 50% !important;
+    height: auto !important;
 }
 
 .dice_btn:hover{
