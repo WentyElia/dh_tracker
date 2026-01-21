@@ -19,6 +19,7 @@
     <div class="tab-nav">
         <button class="tab-btn active" data-tab="tracker">Brett</button>
         <button class="tab-btn" data-tab="dice">Würfel</button>
+        <button class="tab-btn" data-tab="money">Geld</button>
     </div>
 
     <!-- Tracker Tab Content -->
@@ -56,12 +57,9 @@
                     <button class="mark_btn markArmor">M</button>
                 </div>
             </div>
-            <div class="tracker">
-                <h2 class="tracker_title">Geld</h2>
-            </div>
         </div>
     </div>
-    
+
     <div id="configModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -71,51 +69,77 @@
             <button id="saveConfig">Save</button>
         </div>
     </div>
-    
+
     <!-- Dice Tab Content -->
     <div class="tab-content" id="dice-tab">
+        
         <div class="container_sidebar full-width">
+            <div class="dice_results_container">
+                <div class="duality_result">
+                    <div class="last_roll_results_duality"></div>
+                    <div class="duality_result_mod"></div>
+                    <div class="duality_sum"></div>
+                    <button class="dice_btn clearDualityDice">X</button>
+                </div>
+                <div class="normal_results">
+                    <div class="last_roll_results"></div>
+                    <div class="total_sum"></div>
+                    <button class="dice_btn clearDice">X</button>
+                </div>
+            </div>
             <div class="sidebar">
-            <div class="dice_btn_container addD4">
-                <canvas id="d4Canvas"></canvas>
-                <span class="dice_label">D4</span>
+                <div class="dice_btn_container addDuality rollDualityBtn">
+                    <canvas id="2d12Canvas1"></canvas>
+                    <canvas id="2d12Canvas2"></canvas>
+                    <span class="dice_label">Dualitaet</span>
+                </div>
+                <div class="dice_btn_container addD2 rollDiceBtn" id="D2" data-dice-value=2>
+                    <canvas id="d2Canvas"></canvas>
+                    <span class="dice_label">D2</span>
+                    <span id="dice_amountD2_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD4 rollDiceBtn" id="D4" data-dice-value=4>
+                    <canvas id="d4Canvas"></canvas>
+                    <span class="dice_label">D4</span>
+                    <span id="dice_amountD4_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD6 rollDiceBtn" id="D6" data-dice-value=6>
+                    <canvas id="d6Canvas"></canvas>
+                    <span class="dice_label">D6</span>
+                    <span id="dice_amountD6_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD8 rollDiceBtn" id="D8" data-dice-value=8>
+                    <canvas id="d8Canvas"></canvas>
+                    <span class="dice_label">D8</span>
+                    <span id="dice_amountD8_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD10 rollDiceBtn" id="D10" data-dice-value=10>
+                    <canvas id="d10Canvas"></canvas>
+                    <span class="dice_label">D10</span>
+                    <span id="dice_amountD10_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD12 rollDiceBtn" id="D12" data-dice-value=12>
+                    <canvas id="d12Canvas"></canvas>
+                    <span class="dice_label">D12</span>
+                    <span id="dice_amountD12_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD20 rollDiceBtn" id="D20" data-dice-value=20>
+                    <canvas id="d20Canvas"></canvas>
+                    <span class="dice_label">D20</span>
+                    <span id="dice_amountD20_label" class="dice_sublabel hidden">0</span>
+                </div>
+                <div class="dice_btn_container addD100 rollDiceBtn" id="D100" data-dice-value=100>
+                    <canvas id="d100Canvas"></canvas>
+                    <span class="dice_label">D100</span>
+                    <span id="dice_amountD100_label" class="dice_sublabel hidden">0</span>
+                </div>
             </div>
-            <div class="dice_btn_container addD6">
-                <canvas id="d6Canvas"></canvas>
-                <span class="dice_label">D6</span>
-            </div>
-            <div class="dice_btn_container addD8">
-                <canvas id="d8Canvas"></canvas>
-                <span class="dice_label">D8</span>
-            </div>
-            <div class="dice_btn_container addD10">
-                <canvas id="d10Canvas"></canvas>
-                <span class="dice_label">D10</span>
-            </div>
-            <div class="dice_btn_container addD12">
-                <canvas id="d12Canvas"></canvas>
-                <span class="dice_label">D12</span>
-            </div>
-            <div class="dice_btn_container addD20">
-                <canvas id="d20Canvas"></canvas>
-                <span class="dice_label">D20</span>
-            </div>
-            <div class="dice_btn_container addD100">
-                <canvas id="d100Canvas"></canvas>
-                <span class="dice_label">D100</span>
-            </div>
-            <div class="dice_btn_container addDuality">
-                <canvas id="2d12Canvas1"></canvas>
-                <canvas id="2d12Canvas2"></canvas>
-                <span class="dice_label">Dualitaet</span>
-            </div>
-            </div>
-            <button class="dice_btn clearDice">X</button>
-            <button class="dice_btn rollDice">Roll</button>
-            <label id="dice_tally">noDice</label>
         </div>
-    </div>
 
+        <!-- Money Tab Content -->
+        <div class="tab-content" id="money-tab">
+            <h1>work in progress</h1>
+        </div>
 </body>
 
 </html>

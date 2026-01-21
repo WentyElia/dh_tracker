@@ -13,6 +13,13 @@ const stressPlus = document.querySelector('.markStress');
 const armorMinus = document.querySelector('.clearArmor');
 const armorPlus = document.querySelector('.markArmor');
 
+const diceResults = document.querySelector('.last_roll_results');
+const diceTotal = document.querySelector('.total_sum');
+
+const dualityDiceLastRolls = document.querySelector('.last_roll_results_duality');
+const dualityMod = document.querySelector('.duality_result_mod');
+const dualityTotal = document.querySelector('.duality_sum');
+
 // Default stats configuration
 const defaultConfig = {
     hope: { min: 0, max: 6 },
@@ -33,7 +40,6 @@ function saveConfig(config) {
 
 let statsConfig = loadConfig();
 
-// Prevent double-click rapid firing
 let isUpdating = false;
 const COOLDOWN_MS = 100;
 
@@ -375,3 +381,78 @@ document.querySelectorAll('.tab-btn').forEach(button => {
         }
     });
 });
+
+document.querySelectorAll('.rollDiceBtn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if(isUpdating) return;
+        isUpdating = true;
+        
+        const diceId = this.id;
+        const diceValue = parseInt(this.dataset.diceValue); 
+        
+        const result = Math.floor(Math.random() * diceValue) + 1;
+        
+        const sublabel = this.querySelector('.dice_sublabel');
+        if (sublabel) {
+            sublabel.textContent ++;
+            sublabel.classList.remove('hidden');
+        }
+
+        if (diceResults) {
+            const resultDiv = document.createElement('div');
+            resultDiv.textContent = `D${diceValue}: ${result}`;
+            diceResults.appendChild(resultDiv);
+        }
+
+        if(diceTotal){
+            const currentTotal = parseInt(diceTotal.textContent) || 0;
+            diceTotal.textContent = currentTotal + result;
+        }
+
+        setTimeout(() => isUpdating = false, COOLDOWN_MS);
+    });
+});
+
+document.querySelectorAll('.clearDice').forEach(btn => {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.dice_sublabel').forEach(sublabel => {
+            sublabel.textContent = '0';
+            sublabel.classList.add('hidden');
+        diceResults.innerHTML = '';
+        diceTotal.textContent = '0';
+        });
+    });
+});
+
+document.querySelectorAll('.rollDualityBtn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if(isUpdating) return;
+        isUpdating = true;
+        const die1 = Math.floor(Math.random() * 12) + 1;
+        const die2 = Math.floor(Math.random() * 12) + 1;
+        const result = die1 + die2;
+
+        if (dualityDiceLastRolls)  {
+            dualityDiceLastRolls.innerHTML = `Hope: ${die1} \n Fear: ${die2}`;
+        }
+
+        if (dualityTotal) {
+            dualityTotal.textContent = result;
+        }
+
+        if (dualityMod) {
+            dualityMod.textContent = die1 > die2 ? "Hope" : (die1 < die2 ? "Fear" : "Crit");
+        }
+        setTimeout(() => isUpdating = false, COOLDOWN_MS);
+    });
+});
+
+document.querySelectorAll('.clearDualityDice').forEach(btn => { 
+    btn.addEventListener('click', function() {
+        dualityDiceLastRolls.innerHTML = '';
+        dualityTotal.textContent = '0';
+        dualityMod.textContent = '';
+    });
+});
+
+

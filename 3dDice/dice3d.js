@@ -38,13 +38,14 @@ class Dice3D {
     
     getGeometry() {
         switch(this.diceType) {
+            case 'd2': return new THREE.CylinderGeometry(0.8, 0.8, 0.2, 32);
             case 'd4': return new THREE.TetrahedronGeometry(1, 0);
             case 'd6': return new THREE.BoxGeometry(1, 1, 1);
             case 'd8': return new THREE.OctahedronGeometry(1, 0);
             case 'd10': return createD10Geometry(1);
             case 'd12': return new THREE.DodecahedronGeometry(1, 0);
             case 'd20': return new THREE.IcosahedronGeometry(1, 0);
-            case 'd100': return new THREE.SphereGeometry(1, 32, 16);
+            case 'd100': return new THREE.IcosahedronGeometry(1, 2);
             default: return new THREE.TetrahedronGeometry(1, 0);
         }
     }
@@ -92,8 +93,9 @@ class Dice3D {
         requestAnimationFrame(() => this.animate());
         
         if (!this.isSpinning) {
-            this.mesh.rotation.x += 0.002;
-            this.mesh.rotation.y += 0.002;
+            //this.mesh.rotation.x += 0.002;
+            //this.mesh.rotation.y += 0.002;
+            //this.mesh.rotation.z += 0.002;
         } else {
             this.mesh.rotation.x += this.spinSpeed;
             this.mesh.rotation.y += this.spinSpeed * 1.3;
@@ -130,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const diceColors = { ...defaultColors, ...savedColors };
     
     const diceConfigs = [
+        { canvas: 'd2Canvas', container: '.addD2', type: 'd2'},
         { canvas: 'd4Canvas', container: '.addD4', type: 'd4'},
         { canvas: 'd6Canvas', container: '.addD6', type: 'd6'},
         { canvas: 'd8Canvas', container: '.addD8', type: 'd8'},
