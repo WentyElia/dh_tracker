@@ -28,33 +28,34 @@
             <div class="tracker">
                 <h2 class="tracker_title" data-stat="hope">Hoffnung</h2>
                 <div class="item_tracker_container">
-                    <button class="clear_btn minus">-</button>
+                    <button class="clear_btn minus">Use</button>
                     <div class="value_counter hopeValue"></div>
-                    <button class="mark_btn plus">+</button>
+                    <button class="mark_btn plus">Add</button>
                 </div>
             </div>
             <div class="tracker">
                 <h2 class="tracker_title" data-stat="hp">Lebenspunkte</h2>
                 <div class="item_tracker_container">
-                    <button class="clear_btn clearHP">C</button>
+                    <button class="mark_btn markHP">Mark</button>
                     <div class="value_counter hpValue"></div>
-                    <button class="mark_btn markHP">M</button>
+                    <button class="clear_btn clearHP">Clear</button>
+
                 </div>
             </div>
             <div class="tracker">
                 <h2 class="tracker_title" data-stat="stress">Stress</h2>
                 <div class="item_tracker_container">
-                    <button class="clear_btn clearStress">C</button>
+                    <button class="mark_btn markStress">Mark</button>
                     <div class="value_counter stressValue"></div>
-                    <button class="mark_btn markStress">M</button>
+                    <button class="clear_btn clearStress">Clear</button>
                 </div>
             </div>
             <div class="tracker">
                 <h2 class="tracker_title" data-stat="armor">Rüstungspunkte</h2>
                 <div class="item_tracker_container">
-                    <button class="clear_btn clearArmor">C</button>
+                    <button class="mark_btn markArmor">Mark</button>
                     <div class="value_counter armorValue"></div>
-                    <button class="mark_btn markArmor">M</button>
+                    <button class="clear_btn clearArmor">Clear</button>
                 </div>
             </div>
         </div>
@@ -72,7 +73,7 @@
 
     <!-- Dice Tab Content -->
     <div class="tab-content" id="dice-tab">
-        
+
         <div class="container_sidebar full-width">
             <div class="dice_results_container">
                 <div class="duality_result">
@@ -135,11 +136,37 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Money Tab Content -->
-        <div class="tab-content" id="money-tab">
-            <h1>work in progress</h1>
+    <!-- Money Tab Content -->
+    <div class="tab-content" id="money-tab">
+        <div class="container_tracker">
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="money">Handvoll</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn minusHandvoll">-</button>
+                    <div class="value_counter handvollValue">0</div>
+                    <button class="mark_btn plusHandvoll">+</button>
+                </div>
+            </div>
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="money">Beutel</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn minusBeutel">-</button>
+                    <div class="value_counter beutelValue">0</div>
+                    <button class="mark_btn plusBeutel">+</button>
+                </div>
+            </div>
+            <div class="tracker">
+                <h2 class="tracker_title" data-stat="money">Kisten</h2>
+                <div class="item_tracker_container">
+                    <button class="clear_btn minusKisten">-</button>
+                    <div class="value_counter kistenValue">0</div>
+                    <button class="mark_btn plusKisten">+</button>
+                </div>
+            </div>
         </div>
+    </div>
 </body>
 
 </html>

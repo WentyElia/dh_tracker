@@ -84,6 +84,24 @@ saveButton.addEventListener('click', () => {
         statsConfig[currentStat].min = parseInt(minInput.value) || 0;
         statsConfig[currentStat].max = parseInt(maxInput.value) || 100;
         saveConfig(statsConfig);
+        
+        // Re-render the updated tracker
+        const currentValue = parseInt(localStorage.getItem(currentStat));
+        switch(currentStat) {
+            case 'hope':
+                renderHopeRings(currentValue || 0);
+                break;
+            case 'hp':
+                renderHpHearts(currentValue || statsConfig.hp.max);
+                break;
+            case 'stress':
+                renderStressHearts(currentValue || statsConfig.stress.max);
+                break;
+            case 'armor':
+                renderArmorHearts(currentValue || statsConfig.armor.max);
+                break;
+        }
+        
         modal.style.display = 'none';
     }
 });
@@ -113,7 +131,7 @@ if (savedArmor === null || isNaN(savedArmor)) {
     renderArmorHearts(savedArmor);
 }
 
-function renderHpHearts(value, animate = false) {
+function renderHpHearts(value) {
     const maxHearts = statsConfig.hp.max;
     hpValue.innerHTML = '';
     
@@ -123,22 +141,13 @@ function renderHpHearts(value, animate = false) {
         
         if (i >= value) {
             heart.classList.add('broken');
-            
-            const crack = document.createElement('div');
-            crack.className = 'crack';
-            heart.appendChild(crack);
-            
-            if (animate && i === value) {
-                heart.classList.add('animating');
-                setTimeout(() => heart.classList.remove('animating'), 600);
-            }
         }
         
         hpValue.appendChild(heart);
     }
 }
 
-function renderStressHearts(value, animate = false) {
+function renderStressHearts(value) {
     const maxHearts = statsConfig.stress.max;
     stressValue.innerHTML = '';
     
@@ -148,22 +157,20 @@ function renderStressHearts(value, animate = false) {
         
         if (i >= value) {
             heart.classList.add('broken');
-            
-            const crack = document.createElement('div');
-            crack.className = 'crack';
-            heart.appendChild(crack);
-            
-            if (animate && i === value) {
-                heart.classList.add('animating');
-                setTimeout(() => heart.classList.remove('animating'), 600);
-            }
         }
         
         stressValue.appendChild(heart);
     }
+    
+    // Apply full stress effect when all hearts are broken (value = 0)
+    if (value === 0) {
+        stressValue.classList.add('full-stress');
+    } else {
+        stressValue.classList.remove('full-stress');
+    }
 }
 
-function renderArmorHearts(value, animate = false) {
+function renderArmorHearts(value) {
     const maxHearts = statsConfig.armor.max;
     armorValue.innerHTML = '';
     
@@ -173,15 +180,6 @@ function renderArmorHearts(value, animate = false) {
         
         if (i >= value) {
             heart.classList.add('broken');
-            
-            const crack = document.createElement('div');
-            crack.className = 'crack';
-            heart.appendChild(crack);
-            
-            if (animate && i === value) {
-                heart.classList.add('animating');
-                setTimeout(() => heart.classList.remove('animating'), 600);
-            }
         }
         
         armorValue.appendChild(heart);
@@ -267,7 +265,7 @@ function updateHpCounter(change) {
     const max = statsConfig.hp.max;
     currentValue = Math.max(min, Math.min(max, currentValue));
     
-    renderHpHearts(currentValue, change < 0);
+    renderHpHearts(currentValue);
     localStorage.setItem('hp', currentValue);
     
     setTimeout(() => isUpdating = false, COOLDOWN_MS);
@@ -284,7 +282,7 @@ function updateStressCounter(change) {
     const max = statsConfig.stress.max;
     currentValue = Math.max(min, Math.min(max, currentValue));
     
-    renderStressHearts(currentValue, change < 0);
+    renderStressHearts(currentValue);
     localStorage.setItem('stress', currentValue);
     
     setTimeout(() => isUpdating = false, COOLDOWN_MS);
@@ -301,7 +299,7 @@ function updateArmorCounter(change) {
     const max = statsConfig.armor.max;
     currentValue = Math.max(min, Math.min(max, currentValue));
     
-    renderArmorHearts(currentValue, change < 0);
+    renderArmorHearts(currentValue);
     localStorage.setItem('armor', currentValue);
     
     setTimeout(() => isUpdating = false, COOLDOWN_MS);
@@ -400,8 +398,8 @@ document.querySelectorAll('.rollDiceBtn').forEach(btn => {
 
         if (diceResults) {
             const resultDiv = document.createElement('div');
-            resultDiv.textContent = `D${diceValue}: ${result}`;
-            diceResults.appendChild(resultDiv);
+            resultDiv.innerHTML = `<span style="opacity: 0.6;">D${diceValue}:</span> <span style="font-weight: bold;">${result}</span>`;
+            diceResults.prepend(resultDiv);
         }
 
         if(diceTotal){
@@ -454,5 +452,182 @@ document.querySelectorAll('.clearDualityDice').forEach(btn => {
         dualityMod.textContent = '';
     });
 });
+
+// Money Tracking System
+const handvollValue = document.querySelector('.handvollValue');
+const beutelValue = document.querySelector('.beutelValue');
+const kistenValue = document.querySelector('.kistenValue');
+
+const minusHandvoll = document.querySelector('.minusHandvoll');
+const plusHandvoll = document.querySelector('.plusHandvoll');
+const minusBeutel = document.querySelector('.minusBeutel');
+const plusBeutel = document.querySelector('.plusBeutel');
+const minusKisten = document.querySelector('.minusKisten');
+const plusKisten = document.querySelector('.plusKisten');
+
+// Load money from localStorage
+function loadMoney() {
+    handvollValue.textContent = localStorage.getItem('handvoll') || '0';
+    beutelValue.textContent = localStorage.getItem('beutel') || '0';
+    kistenValue.textContent = localStorage.getItem('kisten') || '0';
+}
+
+// Save money to localStorage
+function saveMoney() {
+    localStorage.setItem('handvoll', handvollValue.textContent);
+    localStorage.setItem('beutel', beutelValue.textContent);
+    localStorage.setItem('kisten', kistenValue.textContent);
+}
+
+// Add Handvoll
+plusHandvoll.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    let handvoll = parseInt(handvollValue.textContent);
+    handvoll++;
+    
+    if (handvoll >= 10) {
+        handvoll = 0;
+        let beutel = parseInt(beutelValue.textContent);
+        beutel++;
+        
+        if (beutel >= 10) {
+            beutel = 0;
+            let kisten = parseInt(kistenValue.textContent);
+            kisten++;
+            kistenValue.textContent = kisten;
+        }
+        
+        beutelValue.textContent = beutel;
+    }
+    
+    handvollValue.textContent = handvoll;
+    saveMoney();
+    
+    setTimeout(() => isUpdating = false, COOLDOWN_MS);
+});
+
+// Remove Handvoll
+minusHandvoll.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    let handvoll = parseInt(handvollValue.textContent);
+    let beutel = parseInt(beutelValue.textContent);
+    let kisten = parseInt(kistenValue.textContent);
+    
+    if (handvoll > 0) {
+        handvoll--;
+    } else if (beutel > 0) {
+        beutel--;
+        handvoll = 9;
+    } else if (kisten > 0) {
+        kisten--;
+        beutel = 9;
+        handvoll = 9;
+    } else {
+        alert('Zu wenig Geld');
+        setTimeout(() => isUpdating = false, COOLDOWN_MS);
+        return; // Can't go negative
+    }
+    
+    handvollValue.textContent = handvoll;
+    beutelValue.textContent = beutel;
+    kistenValue.textContent = kisten;
+    saveMoney();
+    
+    setTimeout(() => isUpdating = false, COOLDOWN_MS);
+});
+
+// Add Beutel
+plusBeutel.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    let beutel = parseInt(beutelValue.textContent);
+    beutel++;
+    
+    if (beutel >= 10) {
+        beutel = 0;
+        let kisten = parseInt(kistenValue.textContent);
+        kisten++;
+        kistenValue.textContent = kisten;
+    }
+    
+    beutelValue.textContent = beutel;
+    saveMoney();
+    
+    setTimeout(() => isUpdating = false, COOLDOWN_MS);
+});
+
+// Remove Beutel
+minusBeutel.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    let beutel = parseInt(beutelValue.textContent);
+    let kisten = parseInt(kistenValue.textContent);
+    
+    if (beutel > 0) {
+        beutel--;
+    } else if (kisten > 0) {
+        kisten--;
+        beutel = 9;
+        kistenValue.textContent = kisten;
+    } else {
+        alert('Zu wenig Geld');
+        setTimeout(() => isUpdating = false, COOLDOWN_MS);
+        return; // Can't go negative
+    }
+    
+    beutelValue.textContent = beutel;
+    saveMoney();
+    
+    setTimeout(() => isUpdating = false, COOLDOWN_MS);
+});
+
+// Add Kisten
+plusKisten.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    let kisten = parseInt(kistenValue.textContent);
+    kisten++;
+    kistenValue.textContent = kisten;
+    saveMoney();
+    
+    setTimeout(() => isUpdating = false, COOLDOWN_MS);
+});
+
+// Remove Kisten
+minusKisten.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    let kisten = parseInt(kistenValue.textContent);
+    if (kisten > 0) {
+        kisten--;
+        kistenValue.textContent = kisten;
+        saveMoney();
+    }
+    
+    setTimeout(() => isUpdating = false, COOLDOWN_MS);
+});
+
+// Initialize money values
+loadMoney();
 
 

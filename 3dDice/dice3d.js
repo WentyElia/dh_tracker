@@ -38,7 +38,7 @@ class Dice3D {
     
     getGeometry() {
         switch(this.diceType) {
-            case 'd2': return new THREE.CylinderGeometry(0.8, 0.8, 0.2, 32);
+            case 'd2': return new THREE.CylinderGeometry(0.8, 0.8, 0.2, 16);
             case 'd4': return new THREE.TetrahedronGeometry(1, 0);
             case 'd6': return new THREE.BoxGeometry(1, 1, 1);
             case 'd8': return new THREE.OctahedronGeometry(1, 0);

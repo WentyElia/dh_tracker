@@ -114,6 +114,8 @@ button {
 
 .sidebar{
     flex-shrink: 0;
+    max-height: 60%;
+    min-height: 60%;
     width: 100%;
     background-color: var(--primary-color);
     display: grid;
@@ -193,11 +195,13 @@ button {
 
 .dice_results_container {
     flex: 1;
-    width: 100%;
+    width: 98%;
+    max-height: 38%;
     display: flex;
     flex-direction: row;
     gap: 10px;
     overflow-y: none;
+    margin: 1% 1% 1% 1%;
 }
 
 .duality_result {
@@ -252,6 +256,11 @@ button {
     font-size: 1.2em;
 }
 
+.last_roll_results div:first-child {
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
 .total_sum {
     font-size: 3em;
     font-weight: bold;
@@ -282,6 +291,20 @@ button {
     font-size: 1.5em;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
+}
+
+
+.tracker_title::after {
+    content: '\270E';
+    opacity: 0.4;
+    font-size: 0.7em;
+    margin-left: 0.5em;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .modal {
@@ -422,7 +445,15 @@ button {
     align-items: center;
     justify-content: center;
     padding: 1%;
+    transition: all 0.3s ease;
 }
+
+.stressValue.full-stress {
+    box-shadow: 0 0 30px rgba(184, 233, 134, 1);
+    border-radius: 10px;
+}
+
+
 
 .hpValue div,
 .stressValue div,
@@ -525,58 +556,7 @@ button {
     opacity: 0.5;
 }
 
-.hp-heart .crack {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, #333, transparent, #333);
-    transform: translateX(-50%) scaleY(0);
-    transform-origin: center;
-    opacity: 0;
-}
 
-.hp-heart.broken .crack {
-    opacity: 1;
-}
-
-@keyframes breakHeart {
-    0% {
-        transform: scale(1) rotate(0deg);
-    }
-    25% {
-        transform: scale(1.2) rotate(-5deg);
-    }
-    50% {
-        transform: scale(0.9) rotate(5deg);
-    }
-    75% {
-        transform: scale(1.1) rotate(-3deg);
-    }
-    100% {
-        transform: scale(1) rotate(0deg);
-    }
-}
-
-@keyframes showCrack {
-    0% {
-        transform: translateX(-50%) scaleY(0);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(-50%) scaleY(1);
-        opacity: 1;
-    }
-}
-
-.hp-heart.animating {
-    animation: breakHeart 0.6s ease-out;
-}
-
-.hp-heart.animating .crack {
-    animation: showCrack 0.4s ease-out 0.2s forwards;
-}
 
 .stress-heart {
     width: 80px;
@@ -584,41 +564,20 @@ button {
     border-radius: 10px;
     position: relative;
     transition: all 0.3s ease;
-    background-color: #C8A2C8;
-    border: 3px solid #8B7AA8;
-    box-shadow: 0 0 10px rgba(200, 162, 200, 0.5);
-}
-
-.stress-heart.broken {
     background-color: #555;
-    border-color: #333;
+    border: 3px solid #333;
     box-shadow: none;
     opacity: 0.5;
 }
 
-.stress-heart .crack {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, #333, transparent, #333);
-    transform: translateX(-50%) scaleY(0);
-    transform-origin: center;
-    opacity: 0;
-}
-
-.stress-heart.broken .crack {
+.stress-heart.broken {
+    background-color: #B8E986;
+    border: 3px solid #8FBF5F;
+    box-shadow: 0 0 10px rgba(184, 233, 134, 0.5);
     opacity: 1;
 }
 
-.stress-heart.animating {
-    animation: breakHeart 0.6s ease-out;
-}
 
-.stress-heart.animating .crack {
-    animation: showCrack 0.4s ease-out 0.2s forwards;
-}
 
 .armor-heart {
     width: 80px;
@@ -626,9 +585,9 @@ button {
     border-radius: 10px;
     position: relative;
     transition: all 0.3s ease;
-    background-color: #C0C0C0;
-    border: 3px solid #808080;
-    box-shadow: 0 0 10px rgba(192, 192, 192, 0.5);
+    background-color: #9B7EBD;
+    border: 3px solid #6B5B8C;
+    box-shadow: 0 0 10px rgba(155, 126, 189, 0.5);
 }
 
 .armor-heart.broken {
@@ -638,27 +597,5 @@ button {
     opacity: 0.5;
 }
 
-.armor-heart .crack {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 2px;
-    height: 100%;
-    background: linear-gradient(to bottom, #333, transparent, #333);
-    transform: translateX(-50%) scaleY(0);
-    transform-origin: center;
-    opacity: 0;
-}
 
-.armor-heart.broken .crack {
-    opacity: 1;
-}
-
-.armor-heart.animating {
-    animation: breakHeart 0.6s ease-out;
-}
-
-.armor-heart.animating .crack {
-    animation: showCrack 0.4s ease-out 0.2s forwards;
-}
 
